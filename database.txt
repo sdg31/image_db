@@ -1,0 +1,1 @@
+Images: Image_id (int), Filename (?), Tags(VARCHAR 1000)
