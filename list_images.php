@@ -74,6 +74,9 @@
   </head>
   <body onload="orderGrid()">
     <div class="control">
+      <a href="index.html">Home</a>
+      <a href="list_images.php?page=get&searchString=">Browse</a>
+      <a href="help.html">Help</a>
       <form action="list_images.php" method="get">
         <input type="text" name="searchString" id="searchString">
         <input type="submit" value="search">
