@@ -44,7 +44,7 @@
   print "<br />";
 
    while($row = mysqli_fetch_array($tags_result)) {
-     printf("%s %s ", $row["Name"], $row["Count"]);
+     printf("<a href=\"list_images.php?searchString=" . $row['Name'] . "\">%s</a> %s ", $row["Name"], $row["Count"]);
    }
 
    mysqli_close($db);
