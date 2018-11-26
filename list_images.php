@@ -42,6 +42,7 @@
           margin-right: auto;
           margin-top: 0%;
           margin-bottom: auto;
+          overflow: hidden;
       }
 
       .list {
@@ -77,6 +78,42 @@
         <input type="text" name="searchString" id="searchString">
         <input type="submit" value="search">
       </form>
+
+      <?php
+       $db = mysqli_connect("db1.cs.uakron.edu:3306", "sdg31", "password");
+
+       if(!$db) {
+         print "Error - Could not connect to database.";
+         exit;
+       }
+
+       $er = mysqli_select_db($db, "ISP_sdg31");
+       if(!$er) {
+         print "Error - could not select database.";
+         exit;
+       }
+
+       $query = "SELECT Name, Count FROM Tags ORDER BY Count DESC;";
+       $result = mysqli_query($db, $query);
+       $tag_array = mysqli_fetch_array($result);
+
+       // list the top 20 tags
+       print "<ul>";
+       $i = 0;
+       while($tag_array = mysqli_fetch_array($result)) {
+         if($i > 20)
+           break;
+
+         $name = $tag_array["Name"];
+         $count = $tag_array["Count"];
+
+         print "<li><a href=\"list_images.php?page=get&searchString=$name\">$name</a> $count</li>";
+         ++$i;
+       }
+       print "</ul>";
+
+       mysqli_close($db);
+       ?>
     </div>
     <div class="list">
     <?php
