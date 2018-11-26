@@ -14,6 +14,7 @@
        exit;
      }
 
+     // Upload the image.
      $target_dir = "images/";
      $target_file = $target_dir . basename($_FILES["fileToUpload"]["name"]);
      $upload_ok = 1;
@@ -31,6 +32,8 @@
        }
      }
 
+     $image_id = 0;
+
      if($upload_ok == 0) {
        echo "File was not uploaded.\n";
      } else {
@@ -38,6 +41,7 @@
        if(move_uploaded_file($_FILES["fileToUpload"]["tmp_name"], $target_file)) {
          $query = "INSERT INTO Images VALUES(DEFAULT, \"$filename\");";
          $result = mysqli_query($db, $query);
+         $image_id = mysqli_insert_id($db);
          if($result) {
            echo "The file $filename has been uploaded.\n";
          } else {
@@ -48,6 +52,57 @@
        } else {
          echo "There was an error uploading the file.\n";
        }
+     }
+
+     // Get the tags for the image.
+     $tag_string = $_POST["tags"];
+     if($tag_string != "") {
+       $tags = explode(" ", $tag_string);
+
+       // Add each tag to the Tag table
+       foreach($tags as $tag) {
+         // check if the tag already exists
+         $query = "SELECT Tag_id,Count FROM Tags WHERE Name = \"$tag\"";
+         $result = mysqli_query($db, $query);
+         $tag_id = 0;
+  
+         // If there were no results add the tag to db
+         if(mysqli_num_rows($result) == 0) {
+           $add_tag_query = "INSERT INTO Tags VALUES(DEFAULT, \"$tag\", 1);";
+           $add_tag_result = mysqli_query($db, $add_tag_query);
+           $tag_id = mysqli_insert_id($db);
+
+           if(!$add_tag_result) {
+             echo "The tag was not added to the database.\n";
+             $error = mysqli_error($db);
+             print "<p> $error </p>";
+           }
+         } else { // otherwise, update the tag in the db
+           $array = mysqli_fetch_array($result);
+           $count = ++$array["Count"];
+
+           $upd_tag_query = "UPDATE Tags SET Count = $count;";
+           $upd_tag_result = mysqli_query($db, $upd_tag_query);
+           $tag_id = mysqli_insert_id($db);
+
+           if(!$upd_tag_result) {
+             echo "The file was not updated.\n";
+             $error = mysqli_error($db);
+             print "<p> $error </p>";
+           }
+         }
+
+         // Link this tag to the image.
+         $link_query = "INSERT INTO Image_tags VALUES($image_id, $tag_id);";
+         $link_result = mysqli_query($db, $link_query);
+
+         if(!$link_result) {
+             echo "Tag could not be linked to file.\n";
+             $error = mysqli_error($db);
+             print "<p> $error </p>";
+         }
+       }
+
      }
 
      mysqli_close($db);
