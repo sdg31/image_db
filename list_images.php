@@ -47,9 +47,11 @@
          // proposed solution: tag ids start at 1, and invalids = 0
          if($new_tag)
            $tag_ids[] = $new_tag;
+         else 
+           $tag_ids[] = 0;
        }
 
-       $image_id_query = "SELECT DISTINCT i.Image_id FROM Image_tags it
+       $image_id_query = "SELECT i.Image_id FROM Image_tags it
                           INNER JOIN Images i ON i.Image_id IN
                           (SELECT Image_id from Image_tags
                           WHERE Tag_id IN (" . implode(',',$tag_ids) . ") GROUP BY Image_id
@@ -77,7 +79,7 @@
 
      $result = mysqli_query($db, $query);
      if (!$result) {
-       print "Error - the query could not be executed";
+       print "Nothing here.<br/>";
        exit;
      }
 
