@@ -9,12 +9,37 @@
           display:inline-block;
       }
 
-      table, td, tr {
-          padding: 5px;          
+      table {
+          width: 100%;
+          padding: 5px;
+      }
+
+      td, tr {
+          padding: 5px;         
+      }
+      
+      #grid-container {
+          display: grid;
+          column-gap: 10px;
       }
     </style>
+
+    <script>
+      function orderGrid() {
+          var clientWidth = document.getElementById("grid-container").clientWidth;
+
+          var numElements = Math.floor(clientWidth / 160);
+          
+          var autos = "";
+          for(var i = 0; i < numElements; ++i) {
+              autos += "auto ";
+          }
+          
+          document.getElementById("grid-container").style.gridTemplateColumns = autos;
+      }
+    </script>
   </head>
-  <body>
+  <body onload="orderGrid()">
     <?php
      $db = mysqli_connect("db1.cs.uakron.edu:3306", "sdg31", "password");
 
@@ -83,19 +108,19 @@
        exit;
      }
 
-     print "<table><tr>";
+     print "<div id='grid-container'>";
 
      // Display each image as a link to tde display page.
     foreach ($result as $row) {
        $id = $row["Image_id"];
        $filename = $row["Filename"];
-       print "<td><form action=\"display.php\" metdod=\"get\">
+       print "<span class='thumb'><form action=\"display.php\" metdod=\"get\">
        <input type=\"hidden\" name=\"id\"
        value=" . $id . "> <input type=\"image\" name=\"image\"
-       src=\"images/" . $filename . "\"></input></form></td>";
+       src=\"images/" . $filename . "\"></input></form></span>";
      }
 
-     print "</tr></table>";
+     print "</div>";
 
      mysqli_close($db);
      ?>
