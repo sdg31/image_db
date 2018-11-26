@@ -1,1 +1,17 @@
-Images: Image_id (int), Filename (?), Tags(VARCHAR 1000)
+Images: Image_id (int), Filename (V), Tags(VARCHAR 1000)
+
+CREATE TABLE Images (
+  Image_id INT PRIMARY KEY NOT NULL AUTO_INCREMENT = 0,
+  Filename VARCHAR(1000),
+);
+
+CREATE TABLE Tags (
+  Tag_id INT PRIMARY_KEY NOT NULL AUTO_INCREMENT = 0,
+  Name VARCHAR(1000),
+  COUNT INT
+);
+
+CREATE TABLE Image_tags (
+  Image_id INT PRIMARY KEY,
+  Tag_id INT
+);
