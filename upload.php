@@ -83,6 +83,7 @@
 
            $upd_tag_query = "UPDATE Tags SET Count = $count;";
            $upd_tag_result = mysqli_query($db, $upd_tag_query);
+           // FIXME: this returns 0 if the tag is already in there
            $tag_id = mysqli_insert_id($db);
 
            if(!$upd_tag_result) {
