@@ -30,7 +30,7 @@
      }
 
      $query = NULL;
-     $search_string = $_POST["searchString"];
+     $search_string = $_GET["searchString"];
      $tags = explode(" ", $search_string);
 
      // If the user searched for nothing, display everything.
