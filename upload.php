@@ -84,7 +84,7 @@
            $count = mysqli_fetch_array($count_result)["Count"];
            ++$count;
 
-           $upd_tag_query = "UPDATE Tags SET Count = $count;";
+           $upd_tag_query = "UPDATE Tags SET Count = $count WHERE Tag_id = $tag_id";
            $upd_tag_result = mysqli_query($db, $upd_tag_query);
 
            if(!$upd_tag_result) {
