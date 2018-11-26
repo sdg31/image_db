@@ -67,3 +67,7 @@ body {
     background-color: #fdf6e3;
     padding: 1em;
 }
+
+ul {
+    list-style: none;
+}
