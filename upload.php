@@ -62,9 +62,9 @@
        // Add each tag to the Tag table
        foreach($tags as $tag) {
          // check if the tag already exists
-         $query = "SELECT Tag_id,Count FROM Tags WHERE Name = \"$tag\"";
+         $query = "SELECT Tag_id FROM Tags WHERE Name = \"$tag\"";
          $result = mysqli_query($db, $query);
-         $tag_id = 0;
+         $tag_id = mysqli_fetch_array($result)["Tag_id"];
   
          // If there were no results add the tag to db
          if(mysqli_num_rows($result) == 0) {
@@ -78,13 +78,14 @@
              print "<p> $error </p>";
            }
          } else { // otherwise, update the tag in the db
-           $array = mysqli_fetch_array($result);
-           $count = ++$array["Count"];
+           // We can only get the count if we SELECT from the PRIMARY KEY (Tag_id)
+           $count_query = "SELECT Count FROM Tags WHERE Tag_id = $tag_id;";
+           $count_result = mysqli_query($db, $count_query);
+           $count = mysqli_fetch_array($count_result)["Count"];
+           ++$count;
 
            $upd_tag_query = "UPDATE Tags SET Count = $count;";
            $upd_tag_result = mysqli_query($db, $upd_tag_query);
-           // FIXME: this returns 0 if the tag is already in there
-           $tag_id = mysqli_insert_id($db);
 
            if(!$upd_tag_result) {
              echo "The file was not updated.\n";
