@@ -1,15 +1,70 @@
 <html>
+  <link rel="stylesheet" href="stylesheet.css">
+  
+  <style>
+    html {
+        background-color: #eee8d5;
+        color: #657b83;
+        margin: 1em;
+        font-family: verdana;
+        -webkit-text-size-adjust: 100%;
+        -ms-text-size-adjust: 100%;
+    }
+
+    input[type=text] {
+        width: 100%;
+        padding: 12px 20px;
+        margin: 8px 0;
+        border: 1px solid;
+        border-radius: 4px;
+    }
+
+    input[type=submit] {
+        width:100%;
+        padding: 14px 20px;
+        margin: 8px 0;
+        border: none;
+        border-radius: 4px;
+    }
+    
+    body {
+        margin: 0 auto;
+        max-width: 23cm;
+        height: 95%;
+        border: 1pt solid #93a1a1;
+    }   
+
+    .main {
+        width: 50%;
+        margin: auto;
+    }
+
+    a {
+        margin: 0 1em;
+    }
+  </style>
 
   <body>
     <p>This is a taggable image database. Search for images with a
       space-separated list of tags (e.g., "sky mountain"). Leave the
       search blank to list all images.</p>
-    <form action="list_images.php" method="get">
-      <input type="text" name="searchString" id="searchString">
-      <input type="submit" value="search">
-    </form>
 
-    <a href="upload.html">upload an image</a>
+    <div class="main">
+      <center><h1>Taggable Image Database</h1>
+        <h6>By Sam Goodrick and Jacob Liddy</h6>
+        <a href="upload.html">Upload</a>
+        <a href="list_images.php?page=get&searchString=">Browse</a>
+        <a href="help.html">Help</a>
+        <a href="tech.html">Tech</a>
+      </center>
+      <form action="list_images.php" method="get">
+        <input type="text" name="searchString" id="searchString">
+        <input type="submit" value="search">
+      </form>
+    </div>
+
+
+    
   </body>
 
 </html>

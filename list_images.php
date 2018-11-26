@@ -1,6 +1,12 @@
 <html>
   <head>
+    <link rel="stylesheet" href="stylesheet.css">
+
     <style>
+      html {
+          margin: 1em;
+      }
+      
       input[type="image"] {
           width: 150px;
       }
@@ -22,6 +28,32 @@
           display: grid;
           column-gap: 10px;
       }
+
+      body {
+          position: absolute;
+          width: 95%;
+      }
+
+      .control {
+          float: left;
+          width: 15%;
+          height: 90%;
+          margin-left: 0%;
+          margin-right: auto;
+          margin-top: 0%;
+          margin-bottom: auto;
+      }
+
+      .list {
+          float: left;
+          position: relative;
+          width: 80%;
+          height: 900%;
+          margin-left: auto;
+          margin-right: 0%;
+          margin-top: auto;
+          margin-bottom: auto;
+      }
     </style>
 
     <script>
@@ -40,6 +72,13 @@
     </script>
   </head>
   <body onload="orderGrid()">
+    <div class="control">
+      <form action="list_images.php" method="get">
+        <input type="text" name="searchString" id="searchString">
+        <input type="submit" value="search">
+      </form>
+    </div>
+    <div class="list">
     <?php
      $db = mysqli_connect("db1.cs.uakron.edu:3306", "sdg31", "password");
 
@@ -123,6 +162,7 @@
      print "</div>";
 
      mysqli_close($db);
-     ?>
+    ?>
+    </div>
   </body>
 </html>
