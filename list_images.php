@@ -49,20 +49,18 @@
            $tag_ids[] = $new_tag;
        }
 
-       $image_id_query = "SELECT Image_id FROM Image_tags it
-                          INNER JOIN Images i ON i.Image_id = it.Image_id 
-                          WHERE ";
+       $image_id_query = "SELECT i.Image_id FROM Image_tags it
+                          INNER JOIN Images i ON i.Image_id =
+                          (SELECT Image_id from Image_tags
+                          WHERE Tag_id IN (" . implode(',',$tag_ids) . ") GROUP BY Image_id
+                          HAVING COUNT(*) = " . count($tag_ids) . ");";
 
        $and_clause = "";
        for($i = 0; $i < count($tag_ids); ++$i) {
          $and_clause .= "it.Tag_id = $tag_ids[$i]";
          if($i != (count($tag_ids) - 1))
            $and_clause .= " AND ";
-       }
-
-       $image_id_query .= $and_clause .= ";";
-
-       printf("image_id_query: %s <br/>", $image_id_query); 
+       } 
 
        $image_id_result = mysqli_query($db, $image_id_query);
 
@@ -72,12 +70,9 @@
          print "<p> $error </p>";
        } else {
          $image_ids = mysqli_fetch_array($image_id_result);
-
-         foreach($image_ids as $individual_id)
-           printf("id1: %s <br/>", $individual_id);
   
          $query = "SELECT Filename, Image_id FROM Images
-                   WHERE Image_id IN $image_ids;";
+                   WHERE Image_id IN (" . implode(',',$image_ids) . ");";
        }
      }
 
