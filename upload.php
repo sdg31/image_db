@@ -1,4 +1,7 @@
 <html>
+  <head>
+    <link rel="stylesheet" href="stylesheet.css">
+  </head>
   <body>
     <?php
      $db = mysqli_connect("db1.cs.uakron.edu:3306", "sdg31", "password");
@@ -110,6 +113,7 @@
      mysqli_close($db);
      ?>
 
+    <br/>
     <a href="index.html">Home</a>
     <a href="upload.html">Upload another image.</a>
   </body>
