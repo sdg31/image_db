@@ -21,13 +21,14 @@
       }
 
       td, tr {
-          padding: 5px;         
+          padding: 5px;     
       }
       
-      #grid-container {
+      .grid-container {
           display: grid;
-          column-gap: 10px;
-      }
+          grid-gap: 10px; 
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));  
+     }
 
       body {
           position: absolute;
@@ -36,7 +37,7 @@
 
       .control {
           float: left;
-          width: 15%;
+          width: 5cm;
           height: 90%;
           margin-left: 0%;
           margin-right: auto;
@@ -48,7 +49,7 @@
       .list {
           float: left;
           position: relative;
-          width: 80%;
+          width: 70%;
           height: 900%;
           margin-left: auto;
           margin-right: 0%;
@@ -187,15 +188,15 @@
        exit;
      }
 
-     print "<div id='grid-container'>";
+     print "<div class='grid-container'>";
 
      // Display each image as a link to tde display page.
     foreach ($result as $row) {
        $id = $row["Image_id"];
        $filename = $row["Filename"];
-       print "<span class='thumb'><form action=\"display.php\" metdod=\"get\">
+       print "<span class='thumb'><form action=\"display.php\" method=\"get\">
        <input type=\"hidden\" name=\"id\"
-       value=" . $id . "> <input type=\"image\" name=\"image\"
+       value=" . $id . "> </input> <input type=\"image\" name=\"image\"
        src=\"images/" . $filename . "\"></input></form></span>";
      }
 

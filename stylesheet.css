@@ -13,6 +13,7 @@ input[type=text] {
     border-radius: 4px;
     padding: 6px 10px;
     margin: 8px 0;
+    width: 5cm;
 }
 
 input[type=submit] {
