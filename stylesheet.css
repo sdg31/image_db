@@ -16,7 +16,7 @@ input[type=text] {
     width: 5cm;
 }
 
-input[type=submit] {
+input[type=submit], input[type=file] {
     cursor: pointer;
     background-color: #d33682;
     color: white;

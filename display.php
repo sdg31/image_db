@@ -30,6 +30,14 @@
           margin-bottom: auto;
       }
     </style>
+    <script>
+      var i = 0; 
+      function editTags() {
+          ++i;
+          var editButton = document.getElementById("editButton");
+          editButton.outerHTML = "<form method='post'> <input type='input' autofocus value='" + i + "'></input><input type='submit' value='Submit'></input></form>"
+      }
+    </script>
   </head>
 <body>
   <div class="control">
@@ -100,6 +108,8 @@
 
    mysqli_close($db);
 ?>
+  <br/>
+  <a onclick="editTags()" id="editButton">Edit</a>
 </div>
 </body>
 </html>
