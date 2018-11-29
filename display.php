@@ -33,9 +33,8 @@
     <script>
       var i = 0; 
       function editTags() {
-          ++i;
           var editButton = document.getElementById("editButton");
-          editButton.outerHTML = "<form method='post'> <input type='input' autofocus value='" + i + "'></input><input type='submit' value='Submit'></input></form>"
+          editButton.outerHTML = "<form method='post'> <input type='input' autofocus value='tags go here'></input><input type='submit' value='Submit'></input></form>"
       }
     </script>
   </head>
