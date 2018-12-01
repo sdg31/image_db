@@ -33,7 +33,7 @@
     <script>
       function editTags() {
           var editButton = document.getElementById("editButton");
-          editButton.outerHTML = "<form method='post'> <input type='input' autofocus value='tags go here'></input><input type='submit' value='Submit'></input></form>"
+          editButton.outerHTML = "<form method='post'> <input type='input' autofocus value='"  +tags + "'></input><input type='submit' value='Submit'></input></form>"
       }
     </script>
   </head>
@@ -53,6 +53,7 @@
    }
 
    $er = mysqli_select_db($db, "ISP_sdg31");
+   
    if(!$er) {
      print "Error - could not select database.";
      exit;
@@ -65,6 +66,9 @@
                   INNER JOIN Tags t ON t.Tag_id = it.Tag_id
                   WHERE it.Image_id = $id;";
    $tags_result = mysqli_query($db, $tags_query);
+   // $row = $tags_result->fetch_assoc();
+   // $tags_str = implode(" ", $row);//"FUCKING TAGS STRING";
+   //$tags_row = mysqli_fetch_assoc($tags_result);
 
    if(!$tags_result) {
      echo "Tag could not be linked to file.\n";
@@ -91,6 +95,27 @@
   </div>
   <div class="display">
 <?php
+
+
+  // Get tags of image
+  $tag_query =
+    "SELECT DISTINCT t.* FROM Images i 
+     JOIN Image_tags it ON i.Image_id = it.Image_id 
+     JOIN Tags t ON it.Tag_id = t.Tag_id
+     WHERE i.Image_id = $id";
+  $tag_result = mysqli_query($db, $tag_query);
+
+  $tags_str = "";
+  if (!$tag_result){
+    print "Error: row not found"; 
+    $tags_str = "ERROR";
+    exit;
+  }
+
+  while ($tag_arr = $tag_result->fetch_assoc()){
+    $tags_str = $tags_str . $tag_arr['Name'] . " ";
+  }
+
    // Get the filename.
    $filename_query = "SELECT Filename FROM Images WHERE Image_id = $id;";
    $filename_result = mysqli_query($db, $filename_query);
@@ -106,6 +131,10 @@
 
    mysqli_close($db);
 ?>
+<script type="text/javascript">
+	var tags = "<?php echo $tags_str; ?>"; 
+
+</script> 
   <br/>
   <a onclick="editTags()" id="editButton">Edit</a>
 </div>
