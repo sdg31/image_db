@@ -34,7 +34,12 @@
       function editTags() {
           var editButton = document.getElementById("editButton");
 
-          editButton.outerHTML = "<form action=\"update.php\" method='get'> <input type='text' name='tags' id='tags' autofocus value='" + tags + "'></input><input type='submit' value='Submit'></input></form>"
+          editButton.outerHTML = "<form action=\"update.php?\" method='get'>"
+          + "<input type='text' name='tags' id='tags' autofocus value='" + tags + "'></input><input type='submit' value='Submit'></input>"
+          + "<input type=\"text\" name=\"id\" id=\"id\" value=\""
+          + String(id)
+          + "\" readonly>" 
+          +"</form>"
       }
     </script>
   </head>
@@ -110,9 +115,11 @@
     exit;
   }
 
+  $tag_arr = $tags_result->fetch_assoc();
+
   do {
     $tags_str = $tags_str . $tag_arr['Name'] . " ";
-  } while ($tag_arr = $tag_result->fetch_assoc())
+  } while ($tag_arr = $tag_result->fetch_assoc());
 
 
    // Get the filename.
@@ -132,7 +139,7 @@
 ?>
 <script type="text/javascript">
 	var tags = "<?php echo $tags_str; ?>"; 
-
+  var id = "<?php echo $id; ?>";
 </script> 
   <br/>
   <a onclick="editTags()" id="editButton">Edit</a>

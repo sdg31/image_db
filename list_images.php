@@ -119,6 +119,7 @@
        mysqli_close($db);
        ?>
     </div>
+    
     <div class="list">
     <?php
      $db = mysqli_connect("db1.cs.uakron.edu:3306", "sdg31", "password");
