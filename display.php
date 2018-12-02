@@ -33,7 +33,8 @@
     <script>
       function editTags() {
           var editButton = document.getElementById("editButton");
-          editButton.outerHTML = "<form method='post'> <input type='input' autofocus value='"  +tags + "'></input><input type='submit' value='Submit'></input></form>"
+
+          editButton.outerHTML = "<form action=\"update.php\" method='get'> <input type='text' name='tags' id='tags' autofocus value='" + tags + "'></input><input type='submit' value='Submit'></input></form>"
       }
     </script>
   </head>
@@ -107,14 +108,15 @@
 
   $tags_str = "";
   if (!$tag_result){
-    print "Error: row not found"; 
+    print "Error: the query could not be executed"; 
     $tags_str = "ERROR";
     exit;
   }
 
-  while ($tag_arr = $tag_result->fetch_assoc()){
+  do {
     $tags_str = $tags_str . $tag_arr['Name'] . " ";
-  }
+  } while ($tag_arr = $tag_result->fetch_assoc())
+
 
    // Get the filename.
    $filename_query = "SELECT Filename FROM Images WHERE Image_id = $id;";
