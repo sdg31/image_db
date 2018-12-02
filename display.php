@@ -67,9 +67,6 @@
                   INNER JOIN Tags t ON t.Tag_id = it.Tag_id
                   WHERE it.Image_id = $id;";
    $tags_result = mysqli_query($db, $tags_query);
-   // $row = $tags_result->fetch_assoc();
-   // $tags_str = implode(" ", $row);//"FUCKING TAGS STRING";
-   //$tags_row = mysqli_fetch_assoc($tags_result);
 
    if(!$tags_result) {
      echo "Tag could not be linked to file.\n";
